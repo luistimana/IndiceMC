@@ -5,11 +5,13 @@
 
     <StackLayout VerticalOptions="Center"
                  HorizontalOptions="Center">
+        
         <Label Text="Calcular el IMC"/>
-        <Entry Placeholder="Altura"/>
-        <Entry Placeholder="Peso"/>
-        <Entry Placeholder="Resultado"/>
-        <Button Text="Calcular"/>
+        <Entry Placeholder="Altura" x:Name="txtAlltura"/>
+        <Entry Placeholder="Peso" x:Name="txtPeso"/>
+        <Entry Placeholder="Resultado" x:Name="txtResultado"/>
+        <Button Text="Calcular" x:Name="btnCalcular"
+                Clicked="btnCalcular_Clicked"/>
     </StackLayout>
 
 </ContentPage>
