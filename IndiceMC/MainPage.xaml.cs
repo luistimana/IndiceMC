@@ -17,7 +17,19 @@ namespace IndiceMC
 
         private void btnCalcular_Clicked(object sender, EventArgs e)
         {
-            double altura = Convert.ToDouble(txtAlltura.Text);
+            if(!string.IsNullOrEmpty(txtAltura.Text)&& !string.IsNullOrEmpty(txtPeso.Text))
+            {
+                calcularIMC();
+            }
+            else
+            {
+                DisplayAlert("Datos vacios", "Llene los campos vacios", "Ok");
+            }
+            
+        }
+        private void calcularIMC()
+        {
+            double altura = Convert.ToDouble(txtAltura.Text);
             double peso = Convert.ToDouble(txtPeso.Text);
             double resultado = peso / (altura * altura);
             txtResultado.Text = resultado.ToString();
@@ -27,12 +39,12 @@ namespace IndiceMC
             if (resultado < 18.5)
             {
                 mensaje = "Tienes bajo peso";
-            } 
+            }
             else if (resultado >= 18.5 && resultado <= 24.9)
             {
                 mensaje = "Tu peso es normal";
             }
-            else if (resultado >=25 && resultado <= 29.9)
+            else if (resultado >= 25 && resultado <= 29.9)
             {
                 mensaje = "Tienes sobrepeso";
             }
