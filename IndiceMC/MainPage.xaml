@@ -15,6 +15,8 @@
                IsEnabled="False"/>
         <Button Text="Calcular" x:Name="btnCalcular"
                 Clicked="btnCalcular_Clicked"/>
+        <Button Text="Obtener Peso Mx" x:Name="btnObtenerDatos"
+                Clicked="btnObtenerDatos_Clicked"/>
     </StackLayout>
 
 </ContentPage>

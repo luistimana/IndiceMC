@@ -1,6 +1,9 @@
-﻿using System;
+﻿using IndiceMC.Conexion;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,15 +18,39 @@ namespace IndiceMC
             InitializeComponent();
         }
 
+        int pesoMaximo;
+
         private void btnCalcular_Clicked(object sender, EventArgs e)
         {
             if(!string.IsNullOrEmpty(txtAltura.Text)&& !string.IsNullOrEmpty(txtPeso.Text))
             {
                 calcularIMC();
+                insertar_imc();
             }
             else
             {
                 DisplayAlert("Datos vacios", "Llene los campos vacios", "Ok");
+            }
+            
+        }
+
+        private void insertar_imc()
+        {
+            try
+            {
+                CONEXIONMAESTRA.abrir();
+                SqlCommand cmd = new SqlCommand("Insertar_imc", CONEXIONMAESTRA.conectar);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Altura", txtAltura.Text);
+                cmd.Parameters.AddWithValue("@Peso", txtPeso.Text);
+                cmd.Parameters.AddWithValue("@Resultado", txtResultado.Text);
+                cmd.ExecuteNonQuery();
+                CONEXIONMAESTRA.cerrar();
+            }
+            catch (Exception ex)
+            {
+
+                DisplayAlert("Error en Base de datos", ex.Message, "Ok");
             }
             
         }
@@ -54,6 +81,23 @@ namespace IndiceMC
             }
 
             DisplayAlert("Resultado", mensaje, "Ok");
+        }
+
+        private void btnObtenerDatos_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                CONEXIONMAESTRA.abrir();
+                SqlCommand cmd = new SqlCommand("mostrar_peso_mas_alto", CONEXIONMAESTRA.conectar);
+                pesoMaximo = Convert.ToInt32(cmd.ExecuteScalar());
+                CONEXIONMAESTRA.cerrar();
+                DisplayAlert("Peso Maximo", pesoMaximo.ToString(), "Ok");
+            }
+            catch (Exception ex)
+            {
+
+                DisplayAlert("Error", ex.Message, "Ok");
+            }
         }
     }
 }
